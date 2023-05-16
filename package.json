@@ -1,0 +1,17 @@
+{
+  "name": "istype",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "npx tsc",
+    "start": "npm run build && node dist/index.js",
+    "test": "npm run build && node dist/testcase/test.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
