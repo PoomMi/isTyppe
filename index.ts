@@ -4,29 +4,36 @@ export type TypeConfig<T> = {
     isOptional?: boolean
 }
 
+interface IConfigObjMap {
+    [k: string]: {
+        type: string
+        required: boolean,
+    }
+}
+
 export function isType<T>(config: TypeConfig<T>[]) {
-    const _config = config
-    const _propCount = _config.length
-    const keys = _config.map(x =>x.key as string)
+    let _propCount = 0
+    let _requiredPropCount = 0
+    const configObjMap: IConfigObjMap = {}
+    config.forEach(c => {
+        _propCount++
+        _requiredPropCount += (!c?.isOptional) ? 1 : 0
+        configObjMap[c.key as string] = { type: c.type, required: !c?.isOptional }
+    })
 
     return (obj: any): boolean => {
-        const objKeySize = Object.keys(obj).length
-        if(
-            ( objKeySize > _propCount) || 
-            ( objKeySize < _config.filter(x=> x?.isOptional == undefined || !x?.isOptional).length )
-        ) return false
+        let objKeySize = 0 
+        for (const k in obj) {
+            objKeySize++
+            const _cObj = configObjMap[k]
 
-        for(const k in obj) {
-            const c = _config.find(x => x.key == k)
-
-            if(
-                (!obj[k] && (c?.isOptional == undefined || c.isOptional)) ||
-                (obj[k] && typeof obj[k] != c?.type) ||
-                (obj[k] && typeof obj[k] != c?.type) ||
-                (!keys.includes(k))
+            if (
+                !_cObj ||
+                (!obj[k] && _cObj.required) ||
+                (obj[k] && typeof obj[k] != _cObj?.type)
             ) return false
         }
 
-        return true
+        return !((objKeySize > _propCount) || (objKeySize < _requiredPropCount))
     }
 }

@@ -17,6 +17,9 @@ const Test = {
 
 
 (() => {
+    console.time('Time')
+
+
     //#region human data
     const human1: IHuman = {
         name: "John",
@@ -153,7 +156,7 @@ const Test = {
     console.log("#1: should be true", Test.data(isHumanType(human1)).equals(true))
     console.log("#2: should be false => incorrect type of dateOfBirth", Test.data(isHumanType(human2)).equals(false))
     console.log("#3: should be true", Test.data(isHumanType(human3)).equals(true))
-    console.log("#4: should be false => not includes (favColor)", Test.data(isHumanType(human4)).equals(false))
+    console.log("#4: should be false => must not include (favColor)", Test.data(isHumanType(human4)).equals(false))
     console.log("----------------------------------------------------------------")
     //#endregion
 
@@ -171,7 +174,7 @@ const Test = {
     console.log("#1: should be true", Test.data(isEmployeeType(emp1)).equals(true))
     console.log("#2: should be false => incorrect type of dateOfBirth", Test.data(isEmployeeType(emp2)).equals(false))
     console.log("#3: should be true", Test.data(isEmployeeType(emp3)).equals(true))
-    console.log("#4: should be false => not includes (salary)", Test.data(isEmployeeType(emp4)).equals(false))
+    console.log("#4: should be false => must not include (salary)", Test.data(isEmployeeType(emp4)).equals(false))
     console.log("#5: should be false => missing position", Test.data(isEmployeeType(emp5)).equals(false))
     console.log("----------------------------------------------------------------")
     //#endregion
@@ -186,7 +189,7 @@ const Test = {
     console.log("#1: should be true", Test.data(isDeviceType(device1)).equals(true))
     console.log("#2: should be false => missing model", Test.data(isDeviceType(device2)).equals(false))
     console.log("#3: should be true", Test.data(isDeviceType(device3)).equals(true))
-    console.log("#4: should be false => not includes (price)", Test.data(isDeviceType(device4)).equals(false))
+    console.log("#4: should be false => must not include (price)", Test.data(isDeviceType(device4)).equals(false))
     console.log("----------------------------------------------------------------")
     //#endregion
 
@@ -201,9 +204,10 @@ const Test = {
     console.log("#1: should be true", Test.data(isContactType(contact1)).equals(true))
     console.log("#2: should be false => missing type", Test.data(isContactType(contact2)).equals(false))
     console.log("#3: should be true", Test.data(isContactType(contact3)).equals(true))
-    console.log("#4: should be false => not includes (name)", Test.data(isContactType(contact4)).equals(false))
+    console.log("#4: should be false => must not include (name)", Test.data(isContactType(contact4)).equals(false))
     console.log("----------------------------------------------------------------")
     //#endregion
     
     console.log(`Test Result: success(${Test.success}), failed(${Test.failed})`)
+    console.timeEnd('Time')
 })()
